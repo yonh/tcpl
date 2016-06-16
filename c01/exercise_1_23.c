@@ -1,11 +1,8 @@
 #include <stdio.h>
 
-#define MAXCOL 10
-#define TABSIZE 8
-
 int remove_comments(char line[]);
 
-/* 编写程序将特定长度的行折断成多行,我实现版本 */
+/* 实现删除注释代码*/
 int main()
 {
 	char text[] = "hello world";
@@ -29,6 +26,10 @@ int main()
 	char text7[]="/**/h/*sdfsd*/el/*sdfsdfsdf*/l/*sdlfjsdkf/*/o";
 	remove_comments(text7);
 	
+	char text8[]="\"hello//,world\\\"//hello'\"";
+	remove_comments(text8);
+	
+
 	return 0;
 }
 
@@ -38,13 +39,18 @@ int remove_comments(char text[])
 	int is_mul_comments = 0;
 	int i = 0;
 	char c;
+	char d;
 
 	while ((c = text[i]) != '\0') {
+		
 		//双引号
 		if (c == '"') {
 			is_str = is_str==0?1:0;
 			putchar(c);
-
+		} else if (c == '\\' && is_str == 1) {
+			i++;
+			putchar(c);
+			putchar(text[i]);
 		// 双斜杠
 		} else if (c == '/' && text[i+1] == '/' && is_str == 0) {
 			i++;
