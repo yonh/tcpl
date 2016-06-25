@@ -5,6 +5,7 @@
 
 void print_bin(int n);
 void print_bin_int(int val, int len);
+void printbin(unsigned long x, int n);
 
 int main()
 {
@@ -47,10 +48,14 @@ void print_bin_int(int val, int len)
 
 
 	printf("%d\t%d\t", val, len);
+
+	printbin(val, len);
 	
-	while (index > 0) {
-		putchar(val&index ? '1':'0'); // 判断位是否为1
-		index >>= 1;
-	}
 	putchar('\n');
+}
+
+/* 打印二进制 */
+void printbin(unsigned long x, int n) {
+	if (--n) printbin(x>>1, n);
+	putchar("01"[x&1]);
 }
